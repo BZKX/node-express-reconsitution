@@ -20,8 +20,9 @@ app.use(cookieParser());
 app.use('/public',express.static(path.join(__dirname, './public')));
 app.use('/node_modules',express.static(path.join(__dirname, './node_modules')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//路由分发
+app.use(require('./routes/index.js'));  //负责前台页面
+app.use(require('./routes/users.js'));  //负责后台路由.
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

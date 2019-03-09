@@ -1,11 +1,1 @@
-<!DOCTYPE html><html lang="zh_CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><title>页面</title><link rel="stylesheet" href="/public/stylesheets/style.css"><link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"><script src="./node_modules/jquery/dist/jquery.js"></script><script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script><script src="./node_modules/art-template/lib/template-web.js"></script></head><body><div class="container"><h1 class="text-success"></h1><h2 class="alert-danger">这里是用pug模板生成的index页面 </h2><pre id="text" class="alert-success"></pre></div></body><script>$(function () {
-    $.ajax({
-        url: 'search',
-        type: 'get',
-        dataType: 'json',
-        success: function (data) {
-            console.log(data);
-            $('#text').text(data[0].email);
-        }
-    })
-})</script></html>
+<!DOCTYPE html><html lang="zh_CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><title>页面</title><link rel="stylesheet" href="/public/css/style.css"><link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"><script src="./node_modules/jquery/dist/jquery.js"></script><script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script><script src="./node_modules/art-template/lib/template-web.js"></script></head><body><div class="container"><h1 class="text-success"></h1><h2 class="alert-danger">这里是用pug模板生成的index页面 </h2><pre id="text" class="alert-success"></pre><form id="login"><input type="text" placeholder="用户名" name="email"><input type="password" placeholder="密码" name="password"><input type="submit" value="登录测试"></form></div></body><script src="/public/js/index.js"></script></html>

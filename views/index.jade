@@ -6,17 +6,10 @@ block content
             h1.text-success #{title}
             h2.alert-danger 这里是用pug模板生成的index页面 #{title}
             pre.alert-success#text
+            form#login
+                input(type='text' placeholder='用户名' name='email')
+                input(type='password' placeholder='密码' name='password')
+                input(type='submit' value='登录测试')
 
 block footer_scripts
-    script.
-        $(function () {
-            $.ajax({
-                url: 'search',
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                    $('#text').text(data[0].email);
-                }
-            })
-        })
+    script(src='/public/js/index.js')

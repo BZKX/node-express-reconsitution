@@ -1,28 +1,17 @@
 var express = require('express');
-var router = express.Router();
-
+// var router = express.Router();
+var app = express();
 //导入数据库连接池
-var mysql = require('../model/mysqlDB.js');
+
+var indexController = require('../controllers/indexControllers.js');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+app.get('/', function (req, res, next) {
+    //index.html
     // var test = '';
     let sql = "select * from users";
-
     res.render('index', {title: 'Express'});
-});
+}).get('/search',indexController.search_test);
 
-router.get('/search',function (req, res, next) {
-    // var test = '';
-    let sql = "select * from users";
 
-    mysql.query(sql,function (err, results, files) {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.json(results);
-        // res.render('index', {title: 'Express'});
-    })
-});
-module.exports = router;
+module.exports = app;
