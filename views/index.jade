@@ -1,0 +1,22 @@
+extends layout/layout
+
+block content
+    body
+        .container
+            h1.text-success #{title}
+            h2.alert-danger 这里是用pug模板生成的index页面 #{title}
+            pre.alert-success#text
+
+block footer_scripts
+    script.
+        $(function () {
+            $.ajax({
+                url: 'search',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    $('#text').text(data[0].email);
+                }
+            })
+        })
