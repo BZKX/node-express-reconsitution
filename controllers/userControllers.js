@@ -159,8 +159,6 @@ module.exports = {
      */
     updatePosts: (req, res) => {
 
-
-
         mysql.query(sql, function (err, results, files) {
             if (results.affectedRows > 0) {
                 res.json({
