@@ -5,7 +5,6 @@ let app = express(); //创建路由
 var mysql = require('../model/mysqlDB.js');
 
 
-
 //分发请求
 const userController = require('../controllers/userControllers.js');
 
@@ -14,8 +13,8 @@ const userController = require('../controllers/userControllers.js');
 /* GET users listing. */
 app.get('/admin', function (req, res, next) {
     res.send('这是后台登录页面');
-}).post('/dologin',userController.dologin);
-
+}).post('/dologin', userController.dologin)
+    .get('/getwebinfo', userController.getWebInfo);
 
 
 // module.exports = router;

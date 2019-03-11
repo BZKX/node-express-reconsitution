@@ -1,5 +1,10 @@
 extends layout/layout
 
+//markdown编辑器
+block append head
+    include layout/bootstrap-markdown/markDown
+
+
 block content
     body
         .container
@@ -10,6 +15,11 @@ block content
                 input(type='text' placeholder='用户名' name='email')
                 input(type='password' placeholder='密码' name='password')
                 input(type='submit' value='登录测试')
+
+            //markdown编辑器
+            include layout/bootstrap-markdown/cont
+
+
 
 block footer_scripts
     script(src='/public/js/index.js')

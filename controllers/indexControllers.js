@@ -17,5 +17,6 @@ module.exports = {
             res.json(results);
             // res.render('index', {title: 'Express'});
         })
-    }
+    },
+
 };
