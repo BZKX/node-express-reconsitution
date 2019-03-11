@@ -9,6 +9,17 @@ $(function () {
         }
     });
 
+    $('#loginout').on('click',function () {
+       $.ajax({
+           url:'/loginout',
+           dataType:'get',
+           dataType:'json',
+           success:function (data) {
+               console.log(data);
+           }
+       })
+    });
+
     $('#login').on('submit',function (e) {
         e.preventDefault();
         // alert(1);

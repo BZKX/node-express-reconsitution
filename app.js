@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var session = require('express-session'); //session模块
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 
@@ -20,15 +20,42 @@ app.use(cookieParser());
 app.use('/public',express.static(path.join(__dirname, './public')));
 app.use('/node_modules',express.static(path.join(__dirname, './node_modules')));
 
-//cookie-session中间件 => 用户回话保持
-var cookieSession = require('cookie-session');
-app.set('trust proxy', 1); //trust first proxy 信任首次登陆陌生用户
-app.use(cookieSession({
-  name: 'session',
-  keys: ['admin'],//设置加密钥匙
-  //cookie options
-  maxAge: 12 * 60 * 60 * 1000 //1 小时有效期
+app.use(session({
+  secret:'secret',
+  resave:true,
+  saveUninitialized:false,
+  cookie:{
+    maxAge:1000*60*60 //过期时间设置(单位毫秒)
+  }
 }));
+
+app.use(function(req, res, next){
+  res.locals.user = req.session.user;
+  var err = req.session.error;
+  res.locals.message = '';
+  if (err) res.locals.message = '<div style="margin-bottom: 20px;color:red;">' + err + '</div>';
+  next();
+});
+
+//multer 文件上传
+const multer = require('multer');
+const storage = multer.diskStorage({
+  //设置储存图片的文件夹
+  destination: function (req, file, cb) {
+    cb(null, __dirname + '/public/img')
+  },
+  //文件名
+  filename: function (req, file, cb) {
+    // console.log(req.body);
+    // console.log(file);
+    // console.log(cb);
+    cb(null, req.body.name + '.png');//英雄名 + png
+  }
+});
+
+express.upload = multer({
+  storage: storage
+});
 
 //路由分发
 app.use(require('./routes/index.js'));  //负责前台页面
