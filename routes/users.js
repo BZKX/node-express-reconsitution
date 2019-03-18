@@ -16,8 +16,9 @@ app.get('/admin', function (req, res, next) {
     .get('/getwebinfo', userController.getWebInfo)  //获取内容概述
     .get('/loginout',userController.loginout)       //登出
     .get('/getPosts',userController.getPosts)       //获取文章列表
-    .get('/getPostDetail',userController.getPostDetail)
-    .post('/addPosts',userController.addPosts);    //获取文章详细内容
+    .get('/getPostDetail',userController.getPostDetail) //获取文章详细内容
+    .post('/addPosts',userController.addPosts)    //新增文章
+    .post('/updatePosts',userController.updatePosts)    //更新文章
 
 
 // module.exports = router;

@@ -106,6 +106,21 @@ module.exports = {
         })
     },
 
+    //获取文章详情=>get =>id
+    getPostDetail: (req, res) => {
+        let sql = "select * from posts where id = " + req.query.id + " ;";
+        mysql.query(sql, function (err, results, files) {
+            if (!results[0]) {
+                res.json({
+                    err_code: 1001,
+                    msg: '未找到文章'
+                })
+            } else {
+                res.json(results[0]);
+            }
+        })
+    },
+
     //新增文章=>post=>
     /*
      title      //文章标题
@@ -117,34 +132,34 @@ module.exports = {
     status      //状态
      */
     addPosts: (req, res) => {
+        console.log(req.files);
         let obj = req.body;
-        //储存图片
-        let feature = '/img/' + obj.feature + '.png';
-        let user_id = req.session.user_id;
-        //TODO : 图片上传
-        let sql = "insert into myblog.posts(slug,title,feature,created,content,status,user_id,category_id) values(" + obj.slug + "," + obj.title + "," + obj.feature + "," + obj.created + "," + obj.content + "," + obj.status + "," + user_id + ","+ obj.category +")";
-
-        mysql.query(sql, function (err, results, files) {
-            if (results.affectedRows > 0) {
+        //储存图片(public-img)(数据库)
+        let feature = req.files.feature; //html中input的值
+        feature.mv('./public/img/' + req.body.title + '.png', function (err) {
+            if (err) {
                 res.json({
-                    code:1000,
-                    msg:'ok'
+                    code: 1001.1,
+                    msg: '文件上传失败'
                 })
-            }else {
-                res.json({
-                    code:1001,
-                    msg:'fail'
+            } else {
+                let path = './public/img/' + req.body.title + '.png';
+                let sql = "insert into myblog.posts(slug,title,feature,created,content,status,user_id,category_id) values(" + obj.slug + "," + obj.title + "," + path + "," + obj.created + "," + obj.content + "," + obj.status + "," + user_id + "," + obj.category + ")";
+                mysql.query(sql, function (err, results, files) {
+                    if (results.affectedRows > 0) {
+                        res.json({
+                            code: 1000,
+                            msg: 'ok'
+                        })
+                    } else {
+                        res.json({
+                            code: 1001,
+                            msg: 'fail'
+                        })
+                    }
                 })
             }
-        })
-    },
-
-    //获取文章详情=>get =>id
-    getPostDetail: (req, res) => {
-        let sql = "select * from posts where id = " + req.query.id + " ;"
-        mysql.query(sql, function (err, results, files) {
-            res.json(results[0]);
-        })
+        });
     },
 
     //更新文章=>post=>
@@ -158,19 +173,32 @@ module.exports = {
     status      //状态
      */
     updatePosts: (req, res) => {
-
-        mysql.query(sql, function (err, results, files) {
-            if (results.affectedRows > 0) {
+        let obj = req.body;
+        //储存图片(public-img)(数据库)
+        let feature = req.files.feature; //html中input的值
+        feature.mv('./public/img/' + req.body.title + '.png', function (err) {
+            if (err) {
                 res.json({
-                    code:1000,
-                    msg:'ok'
+                    code: 1001.1,
+                    msg: '文件上传失败'
                 })
-            }else {
-                res.json({
-                    code:1001,
-                    msg:'fail'
+            } else {
+                let path = './public/img/' + req.body.title + '.png';
+                let sql = "update myblog.posts set title = "+ obj.title +", content = "+ obj.content +", slug = "+ obj.slug +", category_id = "+ obj.category_id +", created = "+ obj.created +", status = "+ obj.status +", where id = " + obj.status +",feature ="+ path;
+                mysql.query(sql, function (err, results, files) {
+                    if (results.affectedRows > 0) {
+                        res.json({
+                            code: 1000,
+                            msg: 'ok'
+                        })
+                    } else {
+                        res.json({
+                            code: 1001,
+                            msg: 'fail'
+                        })
+                    }
                 })
             }
-        })
-    },
+        });
+    }
 };

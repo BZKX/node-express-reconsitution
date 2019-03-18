@@ -37,25 +37,8 @@ app.use(function(req, res, next){
   next();
 });
 
-//multer 文件上传
-const multer = require('multer');
-const storage = multer.diskStorage({
-  //设置储存图片的文件夹
-  destination: function (req, file, cb) {
-    cb(null, __dirname + '/public/img')
-  },
-  //文件名
-  filename: function (req, file, cb) {
-    // console.log(req.body);
-    // console.log(file);
-    // console.log(cb);
-    cb(null, req.body.name + '.png');//英雄名 + png
-  }
-});
-
-express.upload = multer({
-  storage: storage
-});
+var fileUpLoad = require('express-fileupload'); //文件上床模块
+app.use(fileUpLoad());
 
 //路由分发
 app.use(require('./routes/index.js'));  //负责前台页面

@@ -32,5 +32,21 @@ $(function () {
                 console.log(data);
             }
         })
+    });
+
+    $('#btn2').on('click',function () {
+        console.log(1);
+        let formData = new FormData($('#addTest')[0]);
+        $.ajax({
+            url: '/addPosts',
+            type: 'post',
+            dataType: 'json',
+            data:formData,
+            processData:false,
+            contentType:false,
+            success:function (data) {
+                console.log(data);
+            }
+        })
     })
 });
