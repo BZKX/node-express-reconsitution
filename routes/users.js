@@ -11,7 +11,10 @@ const userController = require('../controllers/userControllers.js');
 // app.post('/dologin', userController.dologin);
 
 app.get('/admin', function (req, res, next) {
-    res.send('这是后台登录页面');
+    // res.send('这是后台登录页面');
+    res.json({
+        msg:'ok!'
+    })
 }).post('/dologin', userController.dologin) //账号登录
     .get('/getwebinfo', userController.getWebInfo)  //获取内容概述
     .get('/loginout',userController.loginout)       //登出
@@ -19,6 +22,7 @@ app.get('/admin', function (req, res, next) {
     .get('/getPostDetail',userController.getPostDetail) //获取文章详细内容
     .post('/addPosts',userController.addPosts)    //新增文章
     .post('/updatePosts',userController.updatePosts)    //更新文章
+    .get('/test',userController.test)
 
 
 // module.exports = router;

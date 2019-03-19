@@ -11,6 +11,11 @@ let sql_commentsCount = "select * from myblog.comments where status != 'trashed'
 let sql_heldCount = "select * from myblog.comments where status = 'held';";     //查询所有待审核的文章
 
 module.exports = {
+    test:(req,res)=>{
+      res.json({
+          msg:'ok'
+      })
+    },
     //登录
     dologin: (req, res) => {
         // 获取post请求

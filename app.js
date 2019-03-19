@@ -4,21 +4,34 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session'); //session模块
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
+var ejs = require('ejs');
+var cors = require('cors');
+var history = require('connect-history-api-fallback');
 
 var app = express();
 
+
+//处理跨域请求
+app.use(cors({
+  origin:['http://127.0.0.1:3000','http://127.0.0.1:8080','http://localhost:8080'],
+  methods: ['GET','POST'],
+  alloweHeaders:['Conten-Type','Authorization']
+}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.engine('html', ejs.__express);
+app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/public',express.static(path.join(__dirname, './public')));
-app.use('/node_modules',express.static(path.join(__dirname, './node_modules')));
+
+app.use(history()); //兼容history模式
+app.use('/public',express.static(path.join(__dirname, './public')));  //vue 静态资源
+app.use('/',express.static(path.join(__dirname, './views'))); //vue.js 入口页面
+app.use('/node_modules',express.static(path.join(__dirname, './node_modules'))); //后端资源
 
 app.use(session({
   secret:'secret',
