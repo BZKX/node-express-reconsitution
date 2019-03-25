@@ -7,6 +7,7 @@ var mysql = require('../model/mysqlDB.js');
 
 //分发请求
 const userController = require('../controllers/userControllers.js');
+const indexController = require('../controllers/indexControllers.js');
 
 // app.post('/dologin', userController.dologin);
 
@@ -18,11 +19,11 @@ app.get('/admin', function (req, res, next) {
 }).post('/dologin', userController.dologin) //账号登录
     .get('/getwebinfo', userController.getWebInfo)  //获取内容概述
     .get('/loginout',userController.loginout)       //登出
-    .get('/getPosts',userController.getPosts)       //获取文章列表
     .get('/getPostDetail',userController.getPostDetail) //获取文章详细内容
     .post('/addPosts',userController.addPosts)    //新增文章
     .post('/updatePosts',userController.updatePosts)    //更新文章
     .get('/test',userController.test)
+
 
 
 // module.exports = router;

@@ -85,7 +85,7 @@ module.exports = {
         */
     getPosts: (req, res) => {
         //sql语句,查询所有文章
-        let sql = "select p.id,p.title,u.nickname,c.name,p.created,p.status from posts p inner join users u on p.user_id = u.id inner join categories c on p.category_id = c.id where p.status != 'trashed'";
+        let sql = "select p.id,p.title,u.nickname,c.name,p.created,p.status from posts p inner join users u on p.user_id = u.id inner join categories c on p.category_id = c.id where p.status = 'published'";
         //如果不是查找所有分类,添加筛选条件
         if (decodeURI(req.query.category) !== "'所有分类'") {
             sql += "and c.name = ";
@@ -98,10 +98,15 @@ module.exports = {
         }
         console.log(sql);
         mysql.query(sql, function (err, results, files) {
+            console.log(err);
+            if (err){
+                return err;
+            }
             // res.json(results);
+            console.log(req.query.pageSize);
             //文章数量
             let count = results.length;
-            console.log(count);
+            // console.log(count);
             //单页显示数据
             let totalPages = Math.ceil(count / req.query.pageSize);
             res.json({
@@ -113,7 +118,7 @@ module.exports = {
 
     //获取文章详情=>get =>id
     getPostDetail: (req, res) => {
-        let sql = "select * from posts where id = " + req.query.id + " ;";
+        let sql = "SELECT p.id,p.slug,p.title,p.feature,p.created,p.content,p.views,p.likes,p.category_id,c.name FROM posts p INNER JOIN categories c ON p.`category_id` = c.`id`  WHERE p.id = " + req.query.id + " ;";
         mysql.query(sql, function (err, results, files) {
             if (!results[0]) {
                 res.json({

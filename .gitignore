@@ -46,4 +46,6 @@ mysqlDB.js
 
 api.md
 
-.gitignore
+public
+
+views

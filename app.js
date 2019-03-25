@@ -13,7 +13,7 @@ var app = express();
 
 //处理跨域请求
 app.use(cors({
-  origin:['http://127.0.0.1:3000','http://127.0.0.1:8080','http://localhost:8080'],
+  origin:['http://127.0.0.1:8080','http://127.0.0.1:3000','http://localhost:8080'],
   methods: ['GET','POST'],
   alloweHeaders:['Conten-Type','Authorization']
 }));
@@ -29,8 +29,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(history()); //兼容history模式
-app.use('/public',express.static(path.join(__dirname, './public')));  //vue 静态资源
-app.use('/',express.static(path.join(__dirname, './views'))); //vue.js 入口页面
+// app.use('/public',express.static(path.join(__dirname, './public')));  //vue 静态资源
+app.use('/',express.static(path.join(__dirname, './views'))); //vue.js 入口页面(vue静态资源)
 app.use('/node_modules',express.static(path.join(__dirname, './node_modules'))); //后端资源
 
 app.use(session({

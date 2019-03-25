@@ -6,13 +6,9 @@ var app = express();
 
 var indexController = require('../controllers/indexControllers.js');
 
-/* GET home page. */
-app.get('/', function (req, res, next) {
-    //index.html
-    // var test = '';
-    // let sql = "select * from users";
-    res.render('index', {title: [123,123]});
-}).get('/search',indexController.search_test);
+/* 前台页面 */
+app.get('/getPosts', indexController.indexGetPosts)       //获取文章列表
+    .get('/search', indexController.searchPost)  //前台查询文章
 
 
 module.exports = app;
